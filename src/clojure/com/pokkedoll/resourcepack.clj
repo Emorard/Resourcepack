@@ -50,7 +50,7 @@
   (-> (Bukkit/getPluginManager) (.registerEvents (com.pokkedoll.resourcepack.Lis. this) this)))
 
 (defn main-decideResourcepackType
-  "Return 'modern' or 'legacy' from player's version. if ViaAPI is nil, return 'modern'."
+  "Return 'modern' or 'legacy' based on the player's version. If ViaAPI is nil, return 'modern'."
   [this ^Player player]
   (if-let [via ^ViaAPI (Via/getAPI)]
     (-> via
@@ -59,7 +59,7 @@
   "modern")
 
 (defn main-setResourcepack
-  "Set resourcepack to player. Resourcepack must be 'modean' or 'legacy'"
+  "Set the resource pack for the player. The resource pack must be either 'modean' or 'legacy'."
   [^com.pokkedoll.resourcepack.Main this ^Player player ^String resourcepack-type]
   (if (or (= resourcepack-type "modern") (= resourcepack-type "legacy"))
     (if-let [url (-> this (.getConfig) (.getString resourcepack-type nil))]
@@ -87,7 +87,7 @@
   [[] (atom {:plugin plugin})])
 
 (defn- cmd-setResourcepack
-  "Update resourcepack URL."
+  "Update the URL of the selected resource pack."
   [^com.pokkedoll.resourcepack.Cmd this ^CommandSender sender ^String resourcepack-type ^String url]
   (if-let [_url url]
     (let [plugin (getField this :plugin)]
@@ -103,14 +103,14 @@
     (-> sender (.sendMessage "URLが指定されていません"))))
 
 (defn- cmd-applyResourcepack
-  "Apply resourcepack."
+  "Apply the selected resource pack."
   [this sender ^String resourepack-type]
   (let [plugin ^com.pokkedoll.resourcepack.Main (getField this :plugin)
         resourepack-type* (if (nil? resourepack-type) (main-decideResourcepackType plugin sender) (.toLowerCase resourepack-type))]
     (main-setResourcepack plugin sender resourepack-type*)))
 
 (defn f
-  "Parse 1st arguments. return 'default' if arguments is empty."
+  "Parse the first argument. If the argument is empty, return 'default'."
   [args] (if-let [a1 (first args)] a1 "default"))
 
 (defn cmd-onCommand
