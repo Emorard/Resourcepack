@@ -1,0 +1,20 @@
+name: "Resourcepack"
+main: "com.pokkedoll.resourcepack.Main"
+version: "None"
+api-version: "1.17"
+author: "Emorard"
+depend: ["ViaVersion"]
+
+commands:
+  resourcepack:
+    description: "Apply resourcepack to player and manage resourcepack URL."
+    usage: /resourcepack <use|set-modern|set-legacy> [<value>]
+    permission: resourcepack.use
+
+permissions:
+  resourcepack.use:
+    description: "The permission which players apply resourcepack."
+    default: true
+  resourcepack.set:
+    description: "The permission which admins manage resourcepack URL."
+    default: op
